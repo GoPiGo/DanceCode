@@ -1,0 +1,193 @@
+from gopigo import *	#Has the basic functions for controlling the GoPiGo Robot
+import sys	#Used for closing the running program
+import pygame
+from random import randint
+
+print "This script turns the GoPiGo robot into an R2D2 + MJ combo...\nAttitude and dance moves all in one!"
+print "\n\tw: Move GoPiGo Robot forward\n\ta: Turn GoPiGo Robot left\n\td: Turn GoPiGo Robot right\n\ts: Move GoPiGo Robot backward\n\tt: Increase speed\n\tg: Decrease speed\n\tx: Stop GoPiGo Robot\n\tz: Exit\n"
+print "Press:\n\t1: Play 3005 by Childish Gambino \n\t2: Play Thriller by Michael Jackson \n\t3:Play Boom Clap by Charlie XCX \n\ta:3005 Dance \n\tb:Thriller Dance \n\tc: Boom Clap Dance"
+
+mix = ["cg.mp3","mj.mp3","cxox.mp3"]
+
+def play_song(song):
+	pygame.init()
+	pygame.mixer.init()
+	pygame.mixer.music.load(song)
+	pygame.mixer.music.play()
+def wait_please():
+	while read_enc_status(): #this checks to see if the encoder is running
+		time.sleep(0.1) #if True, the program waits 1/10th of a second
+def moon_walk():
+	set_speed(50)
+	enc_tgt(1,1,36)		
+	bwd()	
+	wait_please()
+	print "Moonwalking..."
+def power_spin():
+	set_speed(5)
+	left_rot()
+	for i in range(0, 25):
+		increase_speed()
+		time.sleep(.5)
+	time.sleep(2)
+	
+def thriller_dance():
+	power_spin()
+	time.sleep(4)
+	stop()
+	time.sleep(.5)
+		
+	fwd() #move forward
+	time.sleep(.5)
+	bwd()#move back
+	time.sleep(.5)
+		
+	moon_walk()
+		
+	enc_tgt(1,1,18)
+	set_speed(255)
+	right_rot()
+	wait_please()
+		
+	moon_walk()
+		
+	fwd() #move forward
+	time.sleep(.5)
+	bwd()#move back
+	time.sleep(.5)
+	right()#turn right
+	time.sleep(.5)
+	stop()#stop
+	time.sleep(.2)
+	bwd()#goes backward
+	time.sleep(.5)
+	stop()#Stop
+	time.sleep(.2)
+	left()#Turn left
+	time.sleep(.5)
+	stop()#stop
+	
+		
+def childish_dance ():
+    fwd()
+    time.sleep(3)
+    bwd()
+    time.sleep(3)
+    left_rot()
+    time.sleep(5)
+    left()
+    time.sleep(2)
+    right()
+    time.sleep(2)
+    left()
+    time.sleep(2)
+    right()
+    time.sleep(2)
+    left()
+    time.sleep(2)
+    right()
+    time.sleep(2)
+    fwd()
+    time.sleep(4)
+    bwd()
+    time.sleep(4)
+	stop()
+	
+def boomclap_dance():
+	fwd()
+	time.sleep(1)
+	stop()
+	time.sleep(0.2)
+	fwd()
+	time.sleep(1)
+	stop()
+	time.sleep(0.2)
+	fwd() 
+	time.sleep(1) 
+	stop() 
+	time.sleep(1)
+	fwd()
+	time.sleep(1) 
+	stop
+	time.sleep(0.2)
+	right_rot() 
+	time.sleep(3)
+	motor_bwd()
+	time.sleep(0.4)
+	left_rot() 
+	time.sleep(3)
+	fwd() 
+	time.sleep(1) 
+	left() 
+	time.sleep(1) 
+	right()
+	time.sleep(1) 
+	left_rot() 
+	time.sleep(0.5) 
+	right_rot() 
+	time.sleep(1) 
+	fwd() 
+	time.sleep(1) 
+	left_rot()
+	time.sleep(1) 
+	right_rot()
+	time.sleep(1) 
+	motor_bwd()
+	time.sleep(1)
+	stop()
+	time.sleep(0.2)
+	motor_bwd()
+	time.sleep(1)
+	stop()
+	time.sleep(0.2) 
+	motor_bwd()
+	time.sleep(1)
+	stop()
+	
+
+	
+while True:
+	print "Enter the Command:",
+	a=raw_input()	# Fetch the input from the terminal
+	
+	if a=='1':
+		song = mix[0]
+		play_song(song)
+		
+	elif a=='a':
+		childish_dance()
+		
+	elif a=='2':
+		song = mix[1]
+		play_song(song)
+		
+	elif a=='b':
+		thriller_dance()
+		
+	elif a=='3':
+		song = mix[2]
+		play_song(song)
+		
+	elif a=='c':
+		boomclap_dance()
+		
+	elif a=='w':
+		fwd()	# Move forward
+	elif a=='a':
+		left()	# Turn left
+	elif a=='d':
+		right()	# Turn Right
+	elif a=='s': 
+		bwd()	# Move back
+	elif a=='x':
+		stop()	# Stop
+	elif a=='t':
+		increase_speed()	# Increase speed
+	elif a=='g':
+		decrease_speed()	# Decrease speed
+	elif a=='z':
+		print "Exiting"		# Exit
+		sys.exit()
+	else:
+		print "Wrong Command, Please Enter Again"
+	time.sleep(.1)
